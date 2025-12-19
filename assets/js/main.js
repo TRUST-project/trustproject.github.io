@@ -23,10 +23,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Enhanced Scroll Animation System
+    // Scroll Animation System - Focus on News Page
     const observerOptions = {
         threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
+        rootMargin: '0px'
     };
 
     const animationObserver = new IntersectionObserver((entries) => {
@@ -39,79 +39,164 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }, observerOptions);
 
-    // Function to add animation classes to elements
-    function addScrollAnimations() {
-        // Section titles - fade in from bottom
-        document.querySelectorAll('.section-title').forEach((el, index) => {
+    // Check if we're on the news page
+    const isNewsPage = window.location.pathname.includes('news.html') || 
+                       document.querySelector('.publication-item') !== null;
+
+    if (isNewsPage) {
+        // Apply slide-left animation to publication items
+        const publicationItems = document.querySelectorAll('.publication-item');
+        publicationItems.forEach((el, index) => {
+            // Add animation class immediately
+            el.classList.add('scroll-slide-left');
+            if (index > 0) {
+                el.classList.add(`delay-${Math.min(index, 4)}`);
+            }
+            // Check if element is already in viewport
+            const rect = el.getBoundingClientRect();
+            const isInView = rect.top < window.innerHeight && rect.bottom > 0;
+            
+            if (isInView) {
+                // If already visible, animate immediately with slight delay
+                setTimeout(() => {
+                    el.classList.add('visible');
+                }, 100 * (index + 1));
+            } else {
+                // Otherwise observe for scroll
+                animationObserver.observe(el);
+            }
+        });
+
+        // Apply slide-right animation to news blog items
+        const newsBlogItems = document.querySelectorAll('.news-blog-item');
+        newsBlogItems.forEach((el, index) => {
+            // Add animation class immediately
+            el.classList.add('scroll-slide-right');
+            if (index > 0) {
+                el.classList.add(`delay-${Math.min(index, 4)}`);
+            }
+            // Check if element is already in viewport
+            const rect = el.getBoundingClientRect();
+            const isInView = rect.top < window.innerHeight && rect.bottom > 0;
+            
+            if (isInView) {
+                // If already visible, animate immediately with slight delay
+                setTimeout(() => {
+                    el.classList.add('visible');
+                }, 100 * (index + 1));
+            } else {
+                // Otherwise observe for scroll
+                animationObserver.observe(el);
+            }
+        });
+
+        // Column titles fade in
+        const columnTitles = document.querySelectorAll('.column-title');
+        columnTitles.forEach((el) => {
+            el.classList.add('scroll-fade-in');
+            const rect = el.getBoundingClientRect();
+            const isInView = rect.top < window.innerHeight && rect.bottom > 0;
+            
+            if (isInView) {
+                setTimeout(() => {
+                    el.classList.add('visible');
+                }, 200);
+            } else {
+                animationObserver.observe(el);
+            }
+        });
+    }
+
+    // Check if we're on the team page
+    const isTeamPage = window.location.pathname.includes('team.html') || 
+                       document.querySelector('.team-card') !== null;
+
+    if (isTeamPage) {
+        // Apply fade-in animation to team cards
+        const teamCards = document.querySelectorAll('.team-card');
+        teamCards.forEach((el, index) => {
+            // Add animation class immediately
             el.classList.add('scroll-fade-in');
             if (index > 0) {
                 el.classList.add(`delay-${Math.min(index, 4)}`);
             }
-            animationObserver.observe(el);
+            // Check if element is already in viewport
+            const rect = el.getBoundingClientRect();
+            const isInView = rect.top < window.innerHeight && rect.bottom > 0;
+            
+            if (isInView) {
+                // If already visible, animate immediately with slight delay
+                setTimeout(() => {
+                    el.classList.add('visible');
+                }, 150 * (index + 1));
+            } else {
+                // Otherwise observe for scroll
+                animationObserver.observe(el);
+            }
         });
 
-        // About cards - fade in with stagger
-        document.querySelectorAll('.about-card').forEach((el, index) => {
-            el.classList.add('scroll-fade-in');
-            el.classList.add(`delay-${Math.min(index + 1, 4)}`);
-            animationObserver.observe(el);
-        });
-
-        // Team cards - scale animation
-        document.querySelectorAll('.team-card').forEach((el, index) => {
-            el.classList.add('scroll-scale');
-            el.classList.add(`delay-${Math.min(index % 4, 4)}`);
-            animationObserver.observe(el);
-        });
-
-        // Study cards - fade in
-        document.querySelectorAll('.study-card').forEach((el, index) => {
-            el.classList.add('scroll-fade-in');
-            el.classList.add(`delay-${Math.min(index % 4, 4)}`);
-            animationObserver.observe(el);
-        });
-
-        // Publication items - slide from left
-        document.querySelectorAll('.publication-item').forEach((el, index) => {
-            el.classList.add('scroll-slide-left');
-            el.classList.add(`delay-${Math.min(index % 4, 4)}`);
-            animationObserver.observe(el);
-        });
-
-        // News blog items - slide from right
-        document.querySelectorAll('.news-blog-item').forEach((el, index) => {
-            el.classList.add('scroll-slide-right');
-            el.classList.add(`delay-${Math.min(index % 4, 4)}`);
-            animationObserver.observe(el);
-        });
-
-        // Column titles - fade in
-        document.querySelectorAll('.column-title').forEach((el) => {
-            el.classList.add('scroll-fade-in');
-            animationObserver.observe(el);
-        });
-
-        // Footer columns - fade in
-        document.querySelectorAll('.footer-col').forEach((el, index) => {
-            el.classList.add('scroll-fade-in');
-            el.classList.add(`delay-${Math.min(index + 1, 4)}`);
-            animationObserver.observe(el);
-        });
-
-        // Hero content (if exists and not already visible)
-        const heroContent = document.querySelector('.hero-content');
-        if (heroContent && !heroContent.classList.contains('visible')) {
-            heroContent.classList.add('scroll-fade-in');
-            animationObserver.observe(heroContent);
-            // Make hero visible immediately on load
-            setTimeout(() => {
-                heroContent.classList.add('visible');
-            }, 100);
+        // Section title fade in
+        const sectionTitle = document.querySelector('.section-title');
+        if (sectionTitle) {
+            sectionTitle.classList.add('scroll-fade-in');
+            const rect = sectionTitle.getBoundingClientRect();
+            const isInView = rect.top < window.innerHeight && rect.bottom > 0;
+            
+            if (isInView) {
+                setTimeout(() => {
+                    sectionTitle.classList.add('visible');
+                }, 100);
+            } else {
+                animationObserver.observe(sectionTitle);
+            }
         }
     }
 
-    // Initialize animations
-    addScrollAnimations();
+    // Check if we're on the index/home page
+    const isIndexPage = window.location.pathname.includes('index.html') || 
+                        window.location.pathname === '/' ||
+                        (document.querySelector('.about-card') !== null && document.querySelector('.hero-content') !== null);
+
+    if (isIndexPage) {
+        // Apply fade-in animation to about cards in "Our Mission" section
+        const aboutCards = document.querySelectorAll('.about-card');
+        aboutCards.forEach((el, index) => {
+            // Add animation class immediately
+            el.classList.add('scroll-fade-in');
+            if (index > 0) {
+                el.classList.add(`delay-${Math.min(index, 4)}`);
+            }
+            // Check if element is already in viewport
+            const rect = el.getBoundingClientRect();
+            const isInView = rect.top < window.innerHeight && rect.bottom > 0;
+            
+            if (isInView) {
+                // If already visible, animate immediately with slight delay
+                setTimeout(() => {
+                    el.classList.add('visible');
+                }, 200 * (index + 1));
+            } else {
+                // Otherwise observe for scroll
+                animationObserver.observe(el);
+            }
+        });
+
+        // Section title fade in for "Our Mission"
+        const missionSectionTitle = document.querySelector('#about .section-title');
+        if (missionSectionTitle) {
+            missionSectionTitle.classList.add('scroll-fade-in');
+            const rect = missionSectionTitle.getBoundingClientRect();
+            const isInView = rect.top < window.innerHeight && rect.bottom > 0;
+            
+            if (isInView) {
+                setTimeout(() => {
+                    missionSectionTitle.classList.add('visible');
+                }, 100);
+            } else {
+                animationObserver.observe(missionSectionTitle);
+            }
+        }
+    }
 
     // Mobile Navigation Toggle
     const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
