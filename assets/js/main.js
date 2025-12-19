@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Navigation Scroll Effect
     const navbar = document.querySelector('.navbar');
-    
+
     window.addEventListener('scroll', () => {
         if (window.scrollY > 50) {
             navbar.style.boxShadow = '0 4px 20px rgba(0,0,0,0.05)';
@@ -33,6 +33,25 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }, observerOptions);
+
+    // Mobile Navigation Toggle
+    const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+    const navLinks = document.querySelector('.nav-links');
+
+    if (mobileNavToggle) {
+        mobileNavToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            mobileNavToggle.classList.toggle('active');
+        });
+
+        // Close menu when a link is clicked
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                mobileNavToggle.classList.remove('active');
+            });
+        });
+    }
 
     const fadeElements = document.querySelectorAll('.card, .section-title, .hero-content');
     fadeElements.forEach(el => {

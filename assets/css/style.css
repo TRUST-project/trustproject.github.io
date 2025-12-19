@@ -5,22 +5,26 @@
 
 :root {
   /* Color Palette - Trust & Networks */
-  --primary: #0f172a;       /* Slate 900 - Deep Trust Blue */
-  --primary-light: #1e293b; /* Slate 800 */
-  --secondary: #0ea5e9;     /* Sky 500 - Network Blue */
-  --accent: #f43f5e;        /* Rose 500 - Life/Donation Accent */
-  
+  --primary: #0f172a;
+  /* Slate 900 - Deep Trust Blue */
+  --primary-light: #1e293b;
+  /* Slate 800 */
+  --secondary: #0ea5e9;
+  /* Sky 500 - Network Blue */
+  --accent: #f43f5e;
+  /* Rose 500 - Life/Donation Accent */
+
   --bg-dark: #0f172a;
   --bg-light: #f8fafc;
   --text-main: #334155;
   --text-light: #64748b;
   --white: #ffffff;
-  
+
   /* Glassmorphism */
   --glass-bg: rgba(255, 255, 255, 0.7);
   --glass-border: rgba(255, 255, 255, 0.3);
   --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
-  
+
   /* Typography */
   --font-main: 'Inter', sans-serif;
   --font-heading: 'Outfit', sans-serif;
@@ -41,7 +45,12 @@ body {
   overflow-x: hidden;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-heading);
   color: var(--primary);
   font-weight: 700;
@@ -66,7 +75,7 @@ a {
   z-index: 1000;
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(0,0,0,0.05);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   transition: all 0.3s ease;
 }
 
@@ -116,7 +125,8 @@ a {
   transition: width 0.3s;
 }
 
-.nav-link:hover::after, .nav-link.active::after {
+.nav-link:hover::after,
+.nav-link.active::after {
   width: 100%;
 }
 
@@ -182,6 +192,7 @@ a {
   margin-bottom: 1.2rem;
   background: -webkit-linear-gradient(45deg, var(--primary), var(--secondary));
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
@@ -218,7 +229,8 @@ a {
   font-weight: 600;
 }
 
-.btn-primary:hover, .btn-secondary:hover {
+.btn-primary:hover,
+.btn-secondary:hover {
   transform: translateY(-2px);
 }
 
@@ -280,7 +292,7 @@ a {
   background: white;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
   transition: transform 0.3s ease;
 }
 
@@ -292,7 +304,8 @@ a {
   width: 100%;
   height: 300px;
   object-fit: cover;
-  background-color: #e2e8f0; /* Placeholder color */
+  background-color: #e2e8f0;
+  /* Placeholder color */
 }
 
 .team-info {
@@ -335,7 +348,8 @@ a {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(15, 23, 42, 0.9); /* using primary color with opacity */
+  background: rgba(15, 23, 42, 0.9);
+  /* using primary color with opacity */
   color: white;
   display: flex;
   align-items: center;
@@ -460,7 +474,7 @@ footer {
 }
 
 .footer-bottom {
-  border-top: 1px solid rgba(255,255,255,0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding-top: 2rem;
   text-align: center;
   color: #94a3b8;
@@ -472,12 +486,82 @@ footer {
   .hero h1 {
     font-size: 2.5rem;
   }
-  
+
   .navbar {
     padding: 1rem;
   }
-  
-  .nav-links {
-    display: none; /* simple mobile hide for now */
+
+  /* Mobile Nav Toggle */
+  .mobile-nav-toggle {
+    display: block;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 1001;
   }
+
+  .bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px auto;
+    background-color: var(--primary);
+    transition: all 0.3s ease-in-out;
+  }
+
+  /* Hamburger Animation */
+  .mobile-nav-toggle.active .bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  .mobile-nav-toggle.active .bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+
+  .mobile-nav-toggle.active .bar:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+
+  .nav-links {
+    display: flex;
+    position: fixed;
+    top: 0;
+    right: -100%;
+    height: 100vh;
+    width: 70%;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    transition: right 0.3s ease-in-out;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .nav-links.active {
+    right: 0;
+  }
+
+  /* Layout Fixes */
+  .section-title {
+    font-size: 2rem;
+    width: 100%;
+    left: 0;
+    transform: none;
+    margin-left: 0;
+    padding: 0 1rem;
+  }
+}
+
+/* Ensure Toggle is hidden on desktop */
+.mobile-nav-toggle {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-nav-toggle {
+    display: block;
+  }
+
 }
