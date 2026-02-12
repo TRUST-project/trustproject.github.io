@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="footer-col">
                 <h4>Contact</h4>
                 <a href="https://produccioncientifica.ugr.es/investigadores/455064/detalle" target="_blank" rel="noopener" style="color: chocolate;">María Victoria Martínez-López</a><br>
-                <p>Dept. of Nursery<br>University of Granada</p>
+                <p>Nursing Department,<br>University of Granada</p>
             </div>
         </div>
         <div class="footer-bottom">
